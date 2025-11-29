@@ -1,0 +1,220 @@
+/* Global styles */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* CSS Variables - Light Theme (Default) */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+
+  --radius: 0.5rem;
+
+  /* Chart colors */
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+}
+
+/* Dark Theme */
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+}
+
+/* Skin presets - 11 color schemes */
+.skin-default {
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --ring: 222.2 84% 4.9%;
+}
+
+.skin-blue {
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 213 90% 96%;
+  --accent-foreground: 221 83% 30%;
+  --ring: 221 83% 53%;
+}
+
+.skin-emerald {
+  --primary: 150 84% 39%;
+  --primary-foreground: 144 30% 98%;
+  --accent: 148 76% 96%;
+  --accent-foreground: 150 84% 25%;
+  --ring: 150 84% 39%;
+}
+
+.skin-amber {
+  --primary: 37 92% 50%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 42 92% 95%;
+  --accent-foreground: 37 92% 35%;
+  --ring: 37 92% 50%;
+}
+
+.skin-violet {
+  --primary: 258 90% 66%;
+  --primary-foreground: 258 40% 98%;
+  --accent: 255 92% 96%;
+  --accent-foreground: 258 80% 40%;
+  --ring: 258 90% 66%;
+}
+
+.skin-rose {
+  --primary: 343 82% 60%;
+  --primary-foreground: 330 30% 98%;
+  --accent: 340 90% 96%;
+  --accent-foreground: 343 70% 35%;
+  --ring: 343 82% 60%;
+}
+
+.skin-teal {
+  --primary: 172 66% 45%;
+  --primary-foreground: 168 30% 98%;
+  --accent: 170 80% 95%;
+  --accent-foreground: 172 66% 30%;
+  --ring: 172 66% 45%;
+}
+
+.skin-slate {
+  --primary: 215 25% 27%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 215 20% 94%;
+  --accent-foreground: 215 25% 35%;
+  --ring: 215 25% 27%;
+}
+
+.skin-ocean {
+  --primary: 199 84% 55%;
+  --primary-foreground: 210 40% 98%;
+  --accent: 196 100% 95%;
+  --accent-foreground: 199 84% 35%;
+  --ring: 199 84% 55%;
+}
+
+.skin-sunset {
+  --primary: 17 88% 60%;
+  --primary-foreground: 30 40% 98%;
+  --accent: 24 90% 95%;
+  --accent-foreground: 17 88% 40%;
+  --ring: 17 88% 60%;
+}
+
+.skin-aurora {
+  --primary: 186 75% 50%;
+  --primary-foreground: 190 40% 98%;
+  --accent: 184 80% 94%;
+  --accent-foreground: 186 75% 35%;
+  --ring: 186 75% 50%;
+}
+
+/* Base styles */
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Tailwind theme extension */
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
