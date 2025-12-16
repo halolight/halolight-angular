@@ -299,7 +299,7 @@ export class SettingsPage {
   // Profile settings
   profile: ProfileSettings = {
     name: '管理员',
-    email: 'admin@example.com',
+    email: 'admin@halolight.h7ml.cn',
     bio: '',
   };
 

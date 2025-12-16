@@ -15,6 +15,7 @@ import {
   CardFooterComponent,
   SeparatorComponent,
 } from '../../../shared/components/ui';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-register-page',
@@ -100,16 +101,91 @@ import {
           </ui-card-header>
 
           <ui-card-content class="space-y-3 sm:space-y-4 px-4 sm:px-6">
+            @if (!registrationEnabled) {
+              <!-- 注册关闭 UI -->
+              <div class="space-y-6 py-6">
+                <!-- 主要图标和标题 -->
+                <div class="flex flex-col items-center justify-center space-y-4">
+                  <div class="relative">
+                    <div class="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30">
+                      <svg class="h-10 w-10 text-amber-600 dark:text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                    <div class="absolute -inset-2 rounded-full border-2 border-dashed border-amber-300/50 dark:border-amber-700/50 animate-spin-slow"></div>
+                  </div>
+
+                  <div class="space-y-2 text-center">
+                    <h3 class="text-xl font-semibold text-foreground sm:text-2xl">
+                      注册已关闭
+                    </h3>
+                    <p class="max-w-sm text-sm text-muted-foreground">
+                      系统管理员已暂时关闭新用户注册功能
+                    </p>
+                  </div>
+                </div>
+
+                <!-- 信息卡片 -->
+                <div class="space-y-3">
+                  <div class="flex items-start gap-3 rounded-lg border border-border/50 bg-muted/50 p-4 backdrop-blur-sm transition-colors hover:border-primary/20 hover:bg-muted/80">
+                    <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30">
+                      <svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div class="flex-1 space-y-1">
+                      <p class="text-sm font-medium text-foreground">联系管理员</p>
+                      <p class="text-xs text-muted-foreground">
+                        如需创建账号，请通过邮件联系系统管理员
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3 rounded-lg border border-border/50 bg-muted/50 p-4 backdrop-blur-sm transition-colors hover:border-primary/20 hover:bg-muted/80">
+                    <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/30">
+                      <svg class="h-4 w-4 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div class="flex-1 space-y-1">
+                      <p class="text-sm font-medium text-foreground">已有账号？</p>
+                      <p class="text-xs text-muted-foreground">
+                        如果您已有账号，请直接登录使用系统功能
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 装饰性分隔线 -->
+                <div class="relative">
+                  <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-border/50"></div>
+                  </div>
+                  <div class="relative flex justify-center">
+                    <span class="bg-card px-4 text-xs text-muted-foreground">
+                      感谢您的理解
+                    </span>
+                  </div>
+                </div>
+              </div>
+            } @else {
+              <!-- 正常注册表单 -->
             <!-- 社交登录按钮 -->
             <div class="grid grid-cols-3 gap-2 sm:gap-3">
               @for (provider of socialProviders; track provider.name) {
-                <ui-button
-                  variant="outline"
-                  class="w-full h-11 sm:h-12 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
-                  (click)="handleSocialRegister(provider.name)"
+                <a
+                  [href]="provider.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block"
                 >
-                  <span [innerHTML]="provider.icon" class="group-hover:scale-110 transition-transform"></span>
-                </ui-button>
+                  <ui-button
+                    variant="outline"
+                    class="w-full h-11 sm:h-12 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
+                  >
+                    <span [innerHTML]="provider.icon" class="group-hover:scale-110 transition-transform"></span>
+                  </ui-button>
+                </a>
               }
             </div>
 
@@ -263,16 +339,31 @@ import {
                 }
               </ui-button>
             </form>
+            }
           </ui-card-content>
 
           <ui-card-footer class="flex-col space-y-3 sm:space-y-4 px-4 sm:px-6 pb-5 sm:pb-8 pt-2">
-            <ui-separator />
-            <p class="text-xs sm:text-sm text-muted-foreground text-center">
-              已有账户？
-              <a routerLink="/auth/login" class="text-primary hover:text-primary/80 font-semibold transition-colors">
-                立即登录
-              </a>
-            </p>
+            @if (registrationEnabled) {
+              <ui-separator />
+              <p class="text-xs sm:text-sm text-muted-foreground text-center">
+                已有账户？
+                <a routerLink="/auth/login" class="text-primary hover:text-primary/80 font-semibold transition-colors">
+                  立即登录
+                </a>
+              </p>
+            } @else {
+              <div class="w-full space-y-3">
+                <a routerLink="/auth/login" class="block w-full">
+                  <ui-button
+                    variant="default"
+                    class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 font-medium shadow-lg shadow-blue-500/30 transition-all hover:shadow-xl hover:shadow-blue-500/40"
+                  >
+                    <span>← 返回登录</span>
+                  </ui-button>
+                </a>
+                <p class="text-center text-xs text-muted-foreground">使用现有账号登录系统</p>
+              </div>
+            }
           </ui-card-footer>
         </ui-card>
       </div>
@@ -293,15 +384,23 @@ import {
       25% { transform: translateX(-5px); }
       75% { transform: translateX(5px); }
     }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
     :host ::ng-deep .animate-fade-in-up { animation: fade-in-up 0.8s ease-out; }
     :host ::ng-deep .animate-wave { animation: wave 2s ease-in-out infinite; }
     :host ::ng-deep .animate-shake { animation: shake 0.3s ease-in-out; }
+    :host ::ng-deep .animate-spin-slow { animation: spin-slow 20s linear infinite; }
   `],
 })
 export class RegisterPage {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly sanitizer = inject(DomSanitizer);
+
+  // 读取注册开关配置（默认关闭）
+  readonly registrationEnabled = environment.enableRegistration;
 
   // 表单状态
   name = signal('');
@@ -323,15 +422,11 @@ export class RegisterPage {
   ];
 
   // 社交登录提供商
-  readonly socialProviders: { name: string; icon: SafeHtml }[] = [];
-
-  constructor() {
-    this.socialProviders = [
-      { name: 'github', icon: this.sanitizer.bypassSecurityTrustHtml('<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>') },
-      { name: 'google', icon: this.sanitizer.bypassSecurityTrustHtml('<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>') },
-      { name: 'wechat', icon: this.sanitizer.bypassSecurityTrustHtml('<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z" fill="#07C160"/></svg>') },
-    ];
-  }
+  readonly socialProviders: { name: string; icon: SafeHtml; href: string }[] = [
+    { name: 'github', icon: this.sanitizer.bypassSecurityTrustHtml('<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>'), href: 'https://github.com/halolight/halolight-angular' },
+    { name: 'google', icon: this.sanitizer.bypassSecurityTrustHtml('<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>'), href: 'https://halolight-docs.h7ml.cn' },
+    { name: 'wechat', icon: this.sanitizer.bypassSecurityTrustHtml('<svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z" fill="#07C160"/></svg>'), href: 'https://github.com/halolight' },
+  ];
 
   togglePassword(): void {
     this.showPassword.update(v => !v);
@@ -339,10 +434,6 @@ export class RegisterPage {
 
   toggleConfirmPassword(): void {
     this.showConfirmPassword.update(v => !v);
-  }
-
-  handleSocialRegister(provider: string): void {
-    console.log(`使用 ${provider} 注册`);
   }
 
   async onSubmit(): Promise<void> {

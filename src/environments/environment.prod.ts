@@ -9,4 +9,6 @@ export const environment = {
   // 应用配置
   appTitle: import.meta.env.NG_APP_TITLE || 'Admin Pro',
   brandName: import.meta.env.NG_APP_BRAND_NAME || 'Halolight',
+  // 注册开关（默认关闭）
+  enableRegistration: import.meta.env.NG_APP_ENABLE_REGISTRATION === 'true',
 };
